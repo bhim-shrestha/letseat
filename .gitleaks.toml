@@ -1,0 +1,10 @@
+title = "LetsEat gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Firebase Web config — public identifier, safe to commit"
+paths = [
+  '''firebase-applet-config\.json'''
+]

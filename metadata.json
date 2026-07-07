@@ -1,0 +1,10 @@
+{
+  "name": "Traveler's Food Guide",
+  "description": "The ultimate culinary companion and local food guide for travelers and tourists.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

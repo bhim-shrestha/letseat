@@ -1,0 +1,22 @@
+{
+  "entities": {
+    "SearchLog": {
+      "title": "Search Log",
+      "description": "Per-device search logs (city, weather, response), isolated per user by Firestore security rules.",
+      "type": "object",
+      "properties": {
+        "city": { "type": "string" },
+        "weather": { "type": "string" },
+        "timestamp": { "type": "number", "description": "Client or server timestamp" },
+        "response": { "type": "object" }
+      },
+      "required": ["city", "timestamp", "response"]
+    }
+  },
+  "firestore": {
+    "/search_logs/{logId}": {
+      "schema": { "$ref": "SearchLog" },
+      "description": "Store logs of successful searches"
+    }
+  }
+}
