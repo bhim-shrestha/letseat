@@ -208,7 +208,7 @@ export async function getFoodRecommendations(
   preferences?: { diet?: string; crave?: string; adventure?: string },
   learnedProfile?: LearnedProfile
 ) {
-  console.log(`[Multi-Agent Pipeline] Initiating for ${resolvedCityName} with preferences:`, preferences);
+  console.log("[Multi-Agent Pipeline] Initiating for %s with preferences:", resolvedCityName, preferences);
   
   // ==========================================
   // Pipeline Initialization & Orchestration
@@ -672,4 +672,3 @@ ${originalPrompt}
     ]
   };
 }
-

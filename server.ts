@@ -5,6 +5,7 @@ import { apiRouter } from "./server/api.js";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
@@ -35,6 +36,16 @@ async function startServer() {
   );
 
   app.use(express.json({ limit: "10kb" }));
+
+  // Baseline global rate limiter to protect middleware/routes doing filesystem and other expensive work.
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      limit: 300,
+      standardHeaders: "draft-7",
+      legacyHeaders: false,
+    }),
+  );
 
   // Use modular API router
   app.use("/api", apiRouter);
