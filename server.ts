@@ -5,6 +5,7 @@ import { apiRouter } from "./server/api.js";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
 
 dotenv.config();
 
@@ -37,8 +38,14 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
+    const staticFallbackLimiter = rateLimit({
+      windowMs: 15 * 60 * 1000,
+      limit: 300,
+      standardHeaders: true,
+      legacyHeaders: false,
+    });
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+    app.get('*', staticFallbackLimiter, (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
