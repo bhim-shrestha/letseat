@@ -19,9 +19,20 @@ async function startServer() {
   app.use(morgan("dev"));
 
   // Add Security Headers Middleware
-  app.use(helmet({
-    contentSecurityPolicy: false, // Vite uses inline scripts in dev mode
-  }));
+  app.use(
+    helmet({
+      contentSecurityPolicy:
+        process.env.NODE_ENV !== "production"
+          ? {
+              directives: {
+                ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+                "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+                "connect-src": ["'self'", "ws:", "wss:"],
+              },
+            }
+          : undefined,
+    }),
+  );
 
   app.use(express.json({ limit: "10kb" }));
 
