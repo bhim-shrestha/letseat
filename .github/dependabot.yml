@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    # Grouped updates land as one lockfile change. Ungrouped security PRs that
+    # sit open for weeks get merged out of order and silently revert each other
+    # (a stale postcss PR once dragged nanoid back below its patched version).
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
